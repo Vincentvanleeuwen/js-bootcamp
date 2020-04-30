@@ -1,4 +1,4 @@
-// PART 0 @@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@ Learn About Functional Programming @@@@@@@@
 
 // Function that returns a string representing a cup of green tea
 const prepareTea = () => 'greenTea';
@@ -23,7 +23,7 @@ const tea4TeamFCC = getTea(40);
 // Only change code above this line
 
 
-// PART 1 @@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@ Understand Functional Programming Terminology @@@@@@@@
 
 // Function that returns a string representing a cup of green tea
 const prepareGreenTea = () => 'greenTea';
@@ -57,7 +57,7 @@ console.log(
 );
 
 
-// PART 2 @@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@ Understand the Hazards of Using Imperative Code @@@@@@@@
 
 
 // tabs is an array of titles of each site open within the window
@@ -108,7 +108,7 @@ console.log(finalTabs.tabs);
 
 
 
-// PART 3 @@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@ Avoid Mutations and Side Effects Using Functional Programming @@@@@@@@
 
 // The global variable
 var fixedValue = 4;
@@ -121,7 +121,7 @@ function incrementer () {
 }
 
 
-// PART 4 @@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@ Pass Arguments to Avoid External Dependence in a Function  @@@@@@@@
 
 // The global variable
 var fixedValue = 4;
@@ -134,7 +134,7 @@ function incrementer (value) {
 }
 
 
-// PART 5 @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@ Refactor Global Variables Out of Functions @@@@@@@@
 
 
 // The global variable
@@ -182,7 +182,7 @@ console.log("newest", newestBookList);
 
 
 
-// PART 6 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// Use the map Method to Extract Data from an Array @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 // The global variable
 var watchList = [
@@ -300,18 +300,154 @@ var watchList = [
 
 // Only change code below this line
 
-// var ratings = [];
-// for(var i=0; i < watchList.length; i++){
-//   ratings.push({title: watchList[i]["Title"],  rating: watchList[i]["imdbRating"]});
-// }
 
+var ratings = watchList.map(movie => ({
+  title: movie["Title"],
+  rating: movie["imdbRating"]
 
-var ratings = watchList.map(movie => {
-  let movieRatings = {}
-  movieRatings[movie.Title] = movie.imdbRating;
-  return movieRatings; 
-
-});
+}));
 // Only change code above this line
 
-console.log(JSON.stringify(ratings));
+
+
+// @@@@@@@ Implement map on a Prototype @@@@@@@@
+
+// The global variable
+var s = [23, 65, 98, 5];
+
+Array.prototype.myMap = function(callback){
+  var newArray = [];
+  // Only change code below this line
+  this.forEach(number => {
+     newArray.push(callback(number));
+  });
+  // Only change code above this line
+  return newArray;
+
+};
+
+var new_s = s.myMap(function(item){
+  return item * 2;
+});
+
+
+// @@@@@@@@@ Use the filter Method to Extract Data from an Array @@@@@@@@@
+
+
+// Only change code below this line
+
+let filteredList = watchList.filter(value => {
+  console.log(value.Title);
+  if (value.imdbRating > 8) {
+    return true;
+  } else {
+    return false;
+  }
+}).map(value => ({
+  title: value["Title"],
+  rating: value["imdbRating"]
+}));
+
+// Only change code above this line
+
+console.log(filteredList);
+
+
+// @@@@@@@@@ Implement the filter Method on a Prototype @@@@@@@@@
+
+// The global variable
+var h = [23, 65, 98, 5];
+
+Array.prototype.myFilter = function(callback){
+  // Only change code below this line
+  var newArray = [];
+
+  console.log(callback)
+  this.forEach(number => {
+    if(callback(number)){
+      newArray.push(number);
+    } 
+  })
+
+  // Only change code above this line
+  return newArray;
+
+};
+
+var new_h = h.myFilter(function(item){
+  return item % 2 === 1;
+});
+
+console.log(new_h);
+
+// @@@@@@@@@@@@@@@  Return Part of an Array Using the slice Method @@@@@@@@@@@@@@@@@
+
+function sliceArray(anim, beginSlice, endSlice) {
+  // Only change code below this line
+  return anim.slice(beginSlice, endSlice);
+
+  // Only change code above this line
+}
+var inputAnim = ["Cat", "Dog", "Tiger", "Zebra", "Ant"];
+sliceArray(inputAnim, 1, 3);
+
+//@@@@@@@@@@@@@ Remove Elements from an Array Using slice Instead of splice @@@@@@@@@@@@@
+
+function nonMutatingSplice(cities) {
+  // Only change code below this line
+  let newCities = cities.slice(0,3);
+  return newCities;
+
+  // Only change code above this line
+}
+var inputCities = ["Chicago", "Delhi", "Islamabad", "London", "Berlin"];
+console.log(nonMutatingSplice(inputCities));
+
+// @@@@@@@@@@@ Combine Two Arrays Using the concat Method @@@@@@@@@@@@@@@
+
+function nonMutatingConcat(original, attach) {
+  // Only change code below this line
+  return original.concat(second);
+
+  // Only change code above this line
+}
+var first = [1, 2, 3];
+var second = [4, 5];
+nonMutatingConcat(first, second);
+
+
+//@@@@@@@@@@@@@@@@ Add Elements to the End of an Array Using concat Instead of push @@@@@@@@@@@
+
+function nonMutatingPush(original, newItem) {
+  // Only change code below this line
+  return original.concat(newItem);
+
+  // Only change code above this line
+}
+var first = [1, 2, 3];
+var second = [4, 5];
+nonMutatingPush(first, second);
+
+// @@@@@@@@@@@@@ Use the reduce Method to Analyze Data @@@@@@@@@@@@@@@@@@@
+
+// Couldnt finish this one so I checked the solution
+
+function getRating(watchList){
+  // Add your code below this line
+  let averageRating =
+  watchList
+    // Use filter to find films directed by Christopher Nolan
+    .filter(film => film.Director === "Christopher Nolan")
+    // Use map to convert their ratings from strings to numbers
+    .map(film => Number(film.imdbRating))
+    // Use reduce to add together their ratings
+    .reduce((sumOfRatings, rating) => sumOfRatings + rating) /
+  // Divide by the number of Nolan films to get the average rating
+  watchList.filter(film => film.Director === "Christopher Nolan").length;
+  // Add your code above this line
+  return averageRating;
+}
+console.log(getRating(watchList));
+
+
+// @@@@ Use Higher-Order Functions map, filter, or reduce to Solve a Complex Problem @@@
